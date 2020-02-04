@@ -146,6 +146,22 @@
 	else
 		return ..()
 
+/obj/item/camera_assembly/examine(mob/user)
+	. = ..()
+	switch(state)
+		if (ASSEMBLY_UNBUILT)
+			. += "<span class='notice'>It has bolts to <i>wrench</i> it to an adjacent wall.</span>"
+		if (ASSEMBLY_WRENCHED)
+			. += "<span class='notice'>It is <b>wrenched</b> in place, and the base plate is not <i>welded</i> to the wall.</span>"
+		if (ASSEMBLY_WELDED)
+			. += "<span class='notice'>It is <b>welded</b> securely to the wall, but still missing <i>wiring</i>.</span>"
+		if (ASSEMBLY_WIRED)
+			. += "<span class='notice'>The camera is completely <b>wired</b>, and the control panel can be <i>screwed</i> in place.</span>"
+			if (upgrades.len)
+				. += "<span class='notice'>There are upgrades in the camera which can be <b>pried</b> out. Additional upgrades can be <i>added</i> to the inner wiring.</span>"
+			else
+				. += "<span class='notice'>Upgrades can be <i>added</i> to the inner wiring.</span>"
+
 /obj/item/camera_assembly/update_icon()
 	if(anchored)
 		icon_state = "camera1"
